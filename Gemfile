@@ -7,4 +7,7 @@ gem 'rake', '~> 13.0'  # The current latest
 
 group :development, :test do
   gem 'rspec'
+  gem 'simplecov'
+  gem 'pry'
+  gem 'pry-byebug'
 end
