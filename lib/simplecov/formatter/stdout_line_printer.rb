@@ -8,12 +8,11 @@ module SimpleCov
     class StdoutLinePrinter
       def format(result)
         output = +""
-        # Don't change this message or Fudge exits with non-zero code
         output << "Total Coverage - (#{result.covered_percent.round(2)}%) covered \n"
-        if result.groups.present?
-          output << format_groups(result.groups)
-        else
+        if result.groups.empty?
           output << format_files(result.files)
+        else
+          output << format_groups(result.groups)
         end
         output
       end

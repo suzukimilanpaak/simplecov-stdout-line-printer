@@ -1,6 +1,6 @@
 module SimpleCov
   module Formatter
-    module StdoutLinePrinter
+    class StdoutLinePrinter
       VERSION = "0.1.0"
     end
   end
