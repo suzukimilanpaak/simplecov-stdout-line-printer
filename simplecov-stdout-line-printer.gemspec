@@ -1,4 +1,4 @@
-require_relative 'lib/simplecov/stdout/line/printer/version'
+require_relative 'lib/simplecov/formatter/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'simplecov-stdout-line-printer'

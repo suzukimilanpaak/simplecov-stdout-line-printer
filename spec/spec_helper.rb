@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "simplecov/stdout/line/printer"
+require "simplecov/formatter/stdout_line_printer"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
