@@ -2,7 +2,7 @@ require_relative 'lib/simplecov/formatter/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'simplecov-stdout-line-printer'
-  spec.version       = Simplecov::Stdout::Line::Printer::VERSION
+  spec.version       = Simplecov::Formatter::StdoutLinePrinter::VERSION
   spec.authors       = ['Tatsuya Suzuki']
   spec.email         = ['sin.wave808@gmail.com']
 

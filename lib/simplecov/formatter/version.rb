@@ -1,9 +1,7 @@
 module Simplecov
-  module Stdout
-    module Line
-      module Printer
-        VERSION = "0.1.0"
-      end
+  module Formatter
+    module StdoutLinePrinter
+      VERSION = "0.1.0"
     end
   end
 end
