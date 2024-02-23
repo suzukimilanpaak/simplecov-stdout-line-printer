@@ -2,6 +2,6 @@
 
 require 'spec_helper'
 
-RSpec.describe 'Simple Test' do
+RSpec.describe Simplecov do
   it { expect(1/0).to raise_error }
 end

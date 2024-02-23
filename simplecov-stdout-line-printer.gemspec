@@ -2,12 +2,12 @@ require_relative 'lib/simplecov/formatter/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'simplecov-stdout-line-printer'
-  spec.version       = Simplecov::Formatter::StdoutLinePrinter::VERSION
+  spec.version       = SimpleCov::Formatter::StdoutLinePrinter::VERSION
   spec.authors       = ['Tatsuya Suzuki']
   spec.email         = ['sin.wave808@gmail.com']
 
-  spec.summary       = %q{`simplecov-stdout-line-printer` is one of the formatters for Simplecov, which prints each uncovered line to STDOUT.}
-  spec.description   = %q{`simplecov-stdout-line-printer` is one of the formatters for Simplecov, which prints each uncovered line to STDOUT. It is intended to be used in an environment where you can't store the test results to a file but can check them in the log of RSpec.}
+  spec.summary       = %q{`simplecov-stdout-line-printer` is one of the formatters for SimpleCov, which prints each uncovered line to STDOUT.}
+  spec.description   = %q{`simplecov-stdout-line-printer` is one of the formatters for SimpleCov, which prints each uncovered line to STDOUT. It is intended to be used in an environment where you can't store the test results to a file but can check them in the log of RSpec.}
   spec.homepage      = 'https://github.com/suzukimilanpaak/simplecov-stdout-line-printer'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
