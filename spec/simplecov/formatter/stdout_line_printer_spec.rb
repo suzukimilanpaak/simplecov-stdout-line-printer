@@ -10,7 +10,6 @@ RSpec.describe SimpleCov::Formatter::StdoutLinePrinter do
     subject(:actual) { described_class.new.format(result) }
 
     let(:result) { SimpleCov::Result.new(original_result) }
-
     let(:original_result) do
       {
         File.expand_path("spec/fixtures/sample.rb") => {

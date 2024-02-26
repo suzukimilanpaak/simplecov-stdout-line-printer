@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Simplecov::Formatter::StdoutLinePrinter do
+RSpec.describe SimpleCov::Formatter::StdoutLinePrinter do
   it do
     expect(
       described_class::VERSION
