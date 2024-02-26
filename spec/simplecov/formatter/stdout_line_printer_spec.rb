@@ -7,29 +7,103 @@ require 'simplecov/file_list'
 
 RSpec.describe SimpleCov::Formatter::StdoutLinePrinter do
   describe '#format' do
-    subject(:actual) { described_class.new.format(result) }
-
     let(:result) { SimpleCov::Result.new(original_result) }
-    let(:original_result) do
-      {
-        File.expand_path("spec/fixtures/sample.rb") => {
-          'lines': [nil, 1, 1, 1, nil, nil, 1, 1, nil, nil]
-        },
-        File.expand_path("spec/fixtures/app/models/user.rb") => {
-          'lines': [nil, 1, 1, 1, nil, nil, 1, 0, nil, nil]
-        },
-        File.expand_path("spec/fixtures/app/controllers/sample_controller.rb") => {
-          'lines': [nil, 1, 1, 1, nil, nil, 1, 0, nil, nil]
+    let(:fully_covered) { 'spec/fixtures/sample.rb' }
+    let(:partially_covered) { 'spec/fixtures/sample.rb' }
+    let(:uncovered) { 'spec/fixtures/app/controllers/sample_controller.rb' }
+
+    context 'with single fully covered source code' do
+      subject(:actual) { described_class.new.format(result) }
+
+      let(:original_result) do
+        {
+          File.expand_path(fully_covered) => {
+            'lines': [nil, 1, 1, 1, nil, nil, 1, 1, nil, nil]
+          }
         }
-      }
+      end
+
+      it { expect(actual).to match(/\(100.0%\) covered /) }
+      it "doesn't print fully covered source file" do
+        expect(actual).not_to match(/#{fully_covered}/)
+      end
     end
 
-    it do
-      expect(
-        actual
-      ).to eq(
-        "Total Coverage - (86.67%) covered \n"
-      )
+    context 'with single partially covered source code' do
+      subject(:actual) { described_class.new.format(result) }
+
+      let(:original_result) do
+        {
+          File.expand_path(partially_covered) => {
+            'lines': [nil, 1, 1, 1, nil, nil, 1, 0, nil, nil]
+          }
+        }
+      end
+
+      it { expect(actual).to match(/\(80.0%\) covered /) }
+      it "prints partially covered source file" do
+        expect(actual).to match(/#{partially_covered}/)
+      end
+      it "prints the line of uncovered code" do
+        expect(actual).to match('8:     @foo')
+      end
+    end
+
+    context 'with single uncovered source code' do
+      subject(:actual) { described_class.new.format(result) }
+
+      let(:original_result) do
+        {
+          File.expand_path(uncovered) => {
+            'lines': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          }
+        }
+      end
+
+      it { expect(actual).to match(/\(0.0%\) covered /) }
+      it "prints uncovered source file" do
+        expect(actual).to match(/#{uncovered}/)
+      end
+      it "prints the line of uncovered code" do
+        expect(actual).to match(/1: class FooController/)
+        expect(actual).to match(/2:   def initialize/)
+        expect(actual).to match(/3:     @foo = \"baz\"/)
+        expect(actual).to match(/4:   end/)
+        expect(actual).to match(/5:/)
+        expect(actual).to match(/6:   def bar/)
+        expect(actual).to match(/7:     @bar ||= 'bar'/)
+        expect(actual).to match(/8:   end/)
+        expect(actual).to match(/9: end/)
+      end
+    end
+
+    context 'with multiple files of source code' do
+      subject(:actual) { described_class.new.format(result) }
+
+      let(:original_result) do
+        {
+          File.expand_path(fully_covered) => {
+            'lines': [nil, 1, 1, 1, nil, nil, 1, 1, nil, nil]
+          },
+          File.expand_path(partially_covered) => {
+            'lines': [nil, 1, 1, 1, nil, nil, 1, 0, nil, nil]
+          },
+          File.expand_path(uncovered) => {
+            'lines': [nil, 0, 0, 0, nil, nil, 0, 0, nil, nil]
+          }
+        }
+      end
+
+      it { expect(actual).to match(/\(40.0%\) covered /) }
+      it "doesn't print fully covered source file" do
+        expect(actual).not_to match(/#{fully_covered}/)
+      end
+      it "prints partially covered source file" do
+        expect(actual).to match(/#{partially_covered}/)
+      end
+      it "uncovered source file" do
+        expect(actual).to match(/#{uncovered}/)
+      end
     end
   end
 end
