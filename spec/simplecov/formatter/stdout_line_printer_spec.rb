@@ -9,7 +9,7 @@ RSpec.describe SimpleCov::Formatter::StdoutLinePrinter do
   describe '#format' do
     let(:result) { SimpleCov::Result.new(original_result) }
     let(:fully_covered) { 'spec/fixtures/sample.rb' }
-    let(:partially_covered) { 'spec/fixtures/sample.rb' }
+    let(:partially_covered) { 'spec/fixtures/app/models/user.rb' }
     let(:uncovered) { 'spec/fixtures/app/controllers/sample_controller.rb' }
 
     context 'with single fully covered source code' do
@@ -65,15 +65,16 @@ RSpec.describe SimpleCov::Formatter::StdoutLinePrinter do
         expect(actual).to match(/#{uncovered}/)
       end
       it "prints the line of uncovered code" do
-        expect(actual).to match(/1: class FooController/)
-        expect(actual).to match(/2:   def initialize/)
-        expect(actual).to match(/3:     @foo = \"baz\"/)
-        expect(actual).to match(/4:   end/)
-        expect(actual).to match(/5:/)
-        expect(actual).to match(/6:   def bar/)
-        expect(actual).to match(/7:     @bar ||= 'bar'/)
-        expect(actual).to match(/8:   end/)
-        expect(actual).to match(/9: end/)
+        expect(actual).to match(/1: # FooController/)
+        expect(actual).to match(/2: class FooController/)
+        expect(actual).to match(/3:   def initialize/)
+        expect(actual).to match(/4:     @foo = \"baz\"/)
+        expect(actual).to match(/5:   end/)
+        expect(actual).to match(/6:/)
+        expect(actual).to match(/7:   def bar/)
+        expect(actual).to match(/8:     @bar ||= 'bar'/)
+        expect(actual).to match(/9:   end/)
+        expect(actual).to match(/10: end/)
       end
     end
 
@@ -94,7 +95,7 @@ RSpec.describe SimpleCov::Formatter::StdoutLinePrinter do
         }
       end
 
-      it { expect(actual).to match(/\(40.0%\) covered /) }
+      it { expect(actual).to match(/\(60.0%\) covered /) }
       it "doesn't print fully covered source file" do
         expect(actual).not_to match(/#{fully_covered}/)
       end
