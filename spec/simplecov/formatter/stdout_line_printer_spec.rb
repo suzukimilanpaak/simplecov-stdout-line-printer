@@ -106,5 +106,46 @@ RSpec.describe SimpleCov::Formatter::StdoutLinePrinter do
         expect(actual).to match(/#{uncovered}/)
       end
     end
+
+    context 'when group is defined' do
+      subject(:actual) { described_class.new.format(result) }
+
+      before do
+        allow(SimpleCov).to receive(:groups).and_return(
+          {
+            'models' => SimpleCov::StringFilter.new('spec/fixtures/app/models/'),
+            'controllers' => SimpleCov::StringFilter.new('spec/fixtures/app/controllers/')
+          }
+        )
+      end
+
+      let(:result) do
+        SimpleCov::Result.new(original_result)
+      end
+      let(:original_result) do
+        {
+          File.expand_path(fully_covered) => {
+            'lines': [nil, 1, 1, 1, nil, nil, 1, 1, nil, nil]
+          },
+          File.expand_path(partially_covered) => {
+            'lines': [nil, 1, 1, 1, nil, nil, 1, 0, nil, nil]
+          },
+          File.expand_path(uncovered) => {
+            'lines': [nil, 0, 0, 0, nil, nil, 0, 0, nil, nil]
+          }
+        }
+      end
+
+      it { expect(actual).to match(/\(60.0%\) covered /) }
+      it "doesn't print fully covered source file" do
+        expect(actual).not_to match(/#{fully_covered}/)
+      end
+      it "prints partially covered source file" do
+        expect(actual).to match(/#{partially_covered}/)
+      end
+      it "uncovered source file" do
+        expect(actual).to match(/#{uncovered}/)
+      end
+    end
   end
 end

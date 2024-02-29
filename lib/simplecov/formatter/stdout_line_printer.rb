@@ -31,19 +31,19 @@ module SimpleCov
       end
 
       def format_groups(groups)
-        output = +""
+        output = +''
         groups.each do |name, files|
           output << "Group: #{name}\n"
           output << "=" * 40
           output << "\n"
-          output << (format_files(files).presence || "None - sufficient coverage")
+          output << (format_files(files).empty? ? "None - sufficient coverage" : format_files(files))
           output << "\n"
         end
         output
       end
 
       def format_files(files)
-        output = +""
+        output = +''
         files.each do |file|
           if file.covered_percent < min_cov
             output << "#{file.filename} (coverage: #{file.covered_percent.round(2)}%)\n"

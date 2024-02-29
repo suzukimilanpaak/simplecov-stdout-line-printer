@@ -1,4 +1,10 @@
 require "bundler/setup"
+require 'simplecov'
+
+SimpleCov.start do
+  formatter SimpleCov::Formatter::StdoutLinePrinter
+end
+
 require "simplecov/formatter/stdout_line_printer"
 
 RSpec.configure do |config|
